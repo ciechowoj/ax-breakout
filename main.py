@@ -8,6 +8,20 @@ import pygame
 import threading
 from pygame.locals import *
 
+def Issue20891_workaround():
+    # PyGILState_Ensure on non-Python thread causes fatal error
+
+    class MyThread (threading.Thread):
+        def __init__(self):
+            threading.Thread.__init__(self)
+
+        def run (self):
+            pass
+
+    MyThread().start()
+
+Issue20891_workaround()
+
 # init pygame modules
 pygame.init()
 pygame.font.init()
